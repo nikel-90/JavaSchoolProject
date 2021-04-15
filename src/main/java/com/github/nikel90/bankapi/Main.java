@@ -6,7 +6,6 @@ import com.github.nikel90.bankapi.mapper.Mapper;
 import com.github.nikel90.bankapi.model.*;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ public class Main {
     public static void main(String[] args) throws JsonProcessingException, ParseException {
         String date = "{\n" +
                 "  \"cardNumber\": 1111222233334444,\n" +
-                "  \"expirationDate\": \"10/23\",\n" +
+                "  \"expirationDate\": \"10/23 00:00:00\",\n" +
                 "  \"pinCode\": 444\n" +
                 "}";
         Mapper mapper = new Mapper();
@@ -30,10 +29,8 @@ public class Main {
 
         Card card1 = new Card();
         card1.setCardNumber(1111222233334444L);
-        card1.setExpirationDate(new SimpleDateFormat("yy/MM").parse("10/23"));
+        card1.setExpirationDate(new SimpleDateFormat("MM/yy HH:mm:ss").parse("10/23 03:00:00"));
         card1.setPinCode(444);
-
-        System.out.println();
 
         List<Card> cards = new ArrayList<>();
         cards.add(card1);
