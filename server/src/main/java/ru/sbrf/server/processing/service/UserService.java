@@ -2,13 +2,12 @@ package ru.sbrf.server.processing.service;
 
 import lombok.AllArgsConstructor;
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.sbrf.server.processing.data.entity.User;
-import ru.sbrf.server.processing.data.mapper.UserMapper;
-import ru.sbrf.server.processing.data.repository.UserCrudRepository;
-import ru.sbrf.server.processing.data.transfer.UserDTO;
 import ru.sbrf.server.processing.exception.UserNotFoundException;
+import ru.sbrf.server.processing.model.entity.User;
+import ru.sbrf.server.processing.model.mapper.UserMapper;
+import ru.sbrf.server.processing.model.repository.UserCrudRepository;
+import ru.sbrf.server.processing.model.transfer.UserDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,22 +16,20 @@ import java.util.List;
 @AllArgsConstructor
 public class UserService {
     private final UserCrudRepository userCrudRepository;
-    //private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
+    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
-    public User getUser(Long id) {
+    public UserDTO getUser(Long id) {
         User user = userCrudRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
-        //return userMapper.mapUserToUserDto(user);
-        return user;
+        return userMapper.mapUserToUserDto(user);
     }
 
-    public List<User> getAllUsers() {
+    public List<UserDTO> getAllUsers() {
         Iterable<User> userIterable = userCrudRepository.findAll();
-        List<User> users = new ArrayList<>();
+        List<UserDTO> users = new ArrayList<>();
 
-        //userIterable.forEach(user -> users.add(userMapper.mapUserToUserDto(user)));
-        userIterable.forEach(users::add);
+        userIterable.forEach(user -> users.add(userMapper.mapUserToUserDto(user)));
         return users;
     }
 }

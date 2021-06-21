@@ -4,7 +4,7 @@ package ru.sbrf.server.processing.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
+@ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "Введен несуществующий клиент")
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException() {
     }
